@@ -1,11 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Sophie</title>
+    <title>Reproductor de Video - Sophie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <h1>Page Sophie dtmf Bienvenido</h1>
+<body style="
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #4a148c 0%, #d81b60 50%, #ff6f00 100%);
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+">
+    <div style="
+        text-align: center;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 95%;
+        width: auto;
+    ">
+        <h3 style="
+            color: #333;
+            margin: 0 0 30px 0;
+            font-size: 1.8em;
+            font-weight: 400;
+            line-height: 1.4;
+        ">Si San Juan hablara, diría "debiste tirar más fotos".</h3>
+        
+        <video 
+            id="miVideo"
+            controls
+            controlsList="nodownload"
+            style="
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                max-width: 100%;
+                max-height: 70vh;
+                width: auto;
+                height: auto;
+            "
+            poster="assets/poster.webp"
+            onloadedmetadata="
+                var videos = [
+                    'https://sanjuanqr.s3.us-east-1.amazonaws.com/video01.mov',
+                    'https://sanjuanqr.s3.us-east-1.amazonaws.com/video02.mov'
+                ];
+                var currentVideoIndex = 0;
+                var video = document.getElementById('miVideo');
+                
+                video.addEventListener('ended', function() {
+                    currentVideoIndex++;
+                    if (currentVideoIndex < videos.length) {
+                        video.src = videos[currentVideoIndex];
+                        video.load();
+                        video.play();
+                    } else {
+                        currentVideoIndex = 0;
+                        video.src = videos[0];
+                        video.load();
+                    }
+                });
+            "
+            onclick="
+                var video = document.getElementById('miVideo');
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            ">
+            <source src="https://sanjuanqr.s3.us-east-1.amazonaws.com/video01.mov" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video HTML5.
+        </video>
+        
+        <p style="
+            color: #242424;
+            margin: 20px 0 -13px 0;
+            font-size: 0.9em;
+            font-weight: 300;
+         ">Desarrollado por <b style="font-weight: 600;"><a style="color: #d81b60; text-decoration: none;" href="https://scanearte.com/">SCANEARTE</a></b></p>
+    </div>
 </body>
 </html>
